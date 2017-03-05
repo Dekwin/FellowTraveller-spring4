@@ -16,7 +16,7 @@ Content-Type: application/json
 - *required* **str** `firstName`. Имя
 - *required* **str** `lastName`. Фамилия
 - *required* **str** `email`. Email
-- *required* **str** `gender`. Гендер
+- *required* **str** `gender`. Пол
 
 
 
