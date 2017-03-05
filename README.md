@@ -69,7 +69,7 @@ Content-Type: application/json
 
 ### Заголовок ответа
 
-**Authorization: Bearer <token>** - token для пользовательских запросов
+**Authorization: Bearer <<token>>** - token для пользовательских запросов
 
 ### Примеры
 
