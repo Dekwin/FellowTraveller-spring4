@@ -94,4 +94,4 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzYW0xIiwiZXhwIjoxNDg5NjA5O
 
 ### Заголовок
 
-**Authorization:  <token>** - token, полученный из **POST signin**
+**Authorization:  `<token>`** - token, полученный из **POST signin**
