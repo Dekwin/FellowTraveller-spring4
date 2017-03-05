@@ -1,10 +1,11 @@
 # FellowTraveller-spring4
 
-## Base path: http://5.45.81.178:8080/fellowTraveler_war_exploded1/
-### Пример http://5.45.81.178:8080/fellowTraveler_war_exploded1/signup - регистрация
+
 
 # FellowTraveller HTTP API
 
+## Base path: http://5.45.81.178:8080/fellowTraveler_war_exploded1/
+### Пример http://5.45.81.178:8080/fellowTraveler_war_exploded1/signup - регистрация
 
 ## POST signup
 
