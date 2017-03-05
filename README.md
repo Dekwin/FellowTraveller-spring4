@@ -1,4 +1,7 @@
 # FellowTraveller-spring4
+
+## Base path: http://5.45.81.178:8080/fellowTraveler_war_exploded1/
+
 # FellowTraveller HTTP API
 
 
