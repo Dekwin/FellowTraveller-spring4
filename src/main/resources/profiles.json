@@ -1,0 +1,21 @@
+[{
+  "name": {
+    "title": "mr",
+    "first": "matt",
+    "last": "hahn"
+  },
+  "email": "matt.hahn@example.com",
+  "login": {
+    "username": "greenostrich307",
+    "password": "darkange",
+    "salt": "V5xi38lN",
+    "md5": "cba0d5fb77ae3e0dbe177b9624df5ceb",
+    "sha1": "5f22fdcc79affdef604d89b64b7db599ed454c5e",
+    "sha256": "23afb0983e874169669f96cd72b69234aef4cf54a86f89a25e14e91941ac95a2"
+  },
+  "picture": {
+    "large": "https://randomuser.me/api/portraits/men/20.jpg",
+    "medium": "https://randomuser.me/api/portraits/med/men/20.jpg",
+    "thumbnail": "https://randomuser.me/api/portraits/thumb/men/20.jpg"
+  }
+}]

@@ -1,0 +1,76 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:security="http://www.springframework.org/schema/p" xmlns:beans="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <context:component-scan base-package="com.fellowtraveler"/>
+    <mvc:annotation-driven/>
+
+
+
+    <bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
+
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+
+        <property name="converters">
+            <set>
+            <!--<bean id="roleToUserProfile" class="com.fellowtraveler.converter.RoleToUserProfileConverter"/>-->
+
+            <!--<bean id="roleToUserProfile" class="com.delivery.converter.RoleToUserProfileConverter"/>-->
+            </set>
+        </property>
+    </bean>
+
+
+
+
+
+
+    <!--<bean id="springSecurityFilterChain" class="org.springframework.web.filter.DelegatingFilterProxy"/>-->
+
+
+
+    <!--<security:global-method-security pre-post-annotations="enabled" />-->
+
+    <!--<security:http pattern="/api/login" security="none"/>-->
+    <!--<security:http pattern="/api/signup" security="none"/>-->
+
+    <!--<security:http pattern="/api/**" entry-point-ref="restAuthenticationEntryPoint" create-session="stateless">-->
+        <!--<csrf disabled="true"/>-->
+        <!--<custom-filter before="FORM_LOGIN_FILTER" ref="jwtAuthenticationFilter"/>-->
+    <!--</security:http>-->
+
+    <!--<beans:bean id="jwtAuthenticationFilter" class="com.toptal.travelplanner.security.JwtAuthenticationFilter">-->
+        <!--<beans:property name="authenticationManager" ref="authenticationManager" />-->
+        <!--<beans:property name="authenticationSuccessHandler" ref="jwtAuthenticationSuccessHandler" />-->
+    <!--</beans:bean>-->
+
+    <!--<security:authentication-manager alias="authenticationManager">-->
+        <!--<authentication-provider ref="jwtAuthenticationProvider" />-->
+    <!--</security:authentication-manager>-->
+
+    <!--<mvc:message-converters>-->
+        <!--<bean class="org.springframework.http.converter.StringHttpMessageConverter"/>-->
+        <!--<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>-->
+    <!--</mvc:message-converters>-->
+
+    <!--<mvc:annotation-driven>-->
+        <!--<mvc:message-converters>-->
+
+            <!--<bean class="org.springframework.http.converter.StringHttpMessageConverter"/>-->
+            <!--<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>-->
+        <!--</mvc:message-converters>-->
+    <!--</mvc:annotation-driven>-->
+
+
+    <!--<bean name="userService" class="com.delivery.service.UserServiceImpl"/>-->
+    <!--<bean name="userDao" class="com.delivery.dao.UserDaoImpl"/>-->
+    <!--<bean name="userProfileDao" class="com.delivery.dao.UserProfileDaoImpl"/>-->
+    <!--<bean name="roleToUserProfileConverter" class="com.delivery.converter.RoleToUserProfileConverter"/>-->
+    <!--<bean name="userProfileService" class="com.delivery.service.UserProfileServiceImpl"/>-->
+    <!--<bean name="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"/>-->
+    <!--<bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"/>-->
+
+</beans>
