@@ -1,18 +1,4 @@
-package com.fellowtraveler.controller;
-
-import com.fellowtraveler.exeptions.FailedToLoginException;
-
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletResponse;
-
-
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
+package com.fellowtraveler.controller.auth;
 
 /**
  * Created by igorkasyanenko on 02.03.17.

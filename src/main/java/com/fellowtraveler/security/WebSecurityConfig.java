@@ -81,17 +81,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // disable caching
-        http.headers().cacheControl();
+
         http.csrf().disable() // disable csrf for our requests.
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers(HttpMethod.POST,"/signup").permitAll()
+                .antMatchers(HttpMethod.GET,"/static/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/signin").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 // We filter the api/login requests
-                .addFilterBefore(new JWTLoginFilter("/signin", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(new JWTLoginFilter("/signin", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
                 // And filter other requests to check the presence of JWT in header
-                .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterAfter(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

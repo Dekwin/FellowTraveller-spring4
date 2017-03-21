@@ -1,5 +1,7 @@
 package com.fellowtraveler.configuration;
 
+import com.fellowtraveler.exceptions.MyAsyncUncaughtExceptionHandler;
+import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -10,11 +12,15 @@ import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.scheduling.annotation.AsyncConfigurer;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import java.util.List;
+import java.util.concurrent.Executor;
 
 /**
  * Created by igorkasyanenko on 27.02.17.
@@ -22,10 +28,24 @@ import java.util.List;
 
 @Configuration
 @EnableWebMvc
+@EnableAsync
 @ComponentScan(basePackages = "com.fellowtraveler")
-public class AppConfig extends WebMvcConfigurerAdapter {
+public class AppConfig extends WebMvcConfigurerAdapter implements AsyncConfigurer {
 
 
+    @Override
+    public Executor getAsyncExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(5);
+        executor.setMaxPoolSize(10);
+        executor.setQueueCapacity(10);
+        executor.initialize();
+        return executor;
+    }
+    @Override
+    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+        return new MyAsyncUncaughtExceptionHandler();
+    }
 
 
     /**

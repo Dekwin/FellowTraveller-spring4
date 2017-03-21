@@ -4,9 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import com.fellowtraveler.model.User;
-import com.fellowtraveler.model.errors.ErrorMessage;
 import com.fellowtraveler.model.errors.JSONException;
-import com.fellowtraveler.model.jwt2.AccountCredentials;
+import com.fellowtraveler.model.jwtauth.AccountCredentials;
+import com.fellowtraveler.model.userdetails.CustomUserDetails;
 import com.fellowtraveler.service.TokenAuthenticationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -46,7 +46,8 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
             AccountCredentials credentials = new ObjectMapper().readValue(httpServletRequest.getInputStream(), AccountCredentials.class);
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(credentials.getSsoId(), credentials.getPassword());
             return getAuthenticationManager().authenticate(token);
-        } catch (UnrecognizedPropertyException ex){
+        }
+        catch (UnrecognizedPropertyException ex){
             httpServletResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             httpServletResponse.getWriter().write(convertObjectToJson(new JSONException(0,ex.getMessage())));
             return null;
@@ -58,20 +59,21 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
             return null;
         }
         ObjectMapper mapper = new ObjectMapper();
+
         return mapper.writeValueAsString(object);
     }
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication)
             throws IOException, ServletException {
-
-        System.out.println("!authentication");
-        System.out.println(authentication);
-        System.out.println(authentication.getPrincipal());
-        System.out.println(authentication.getDetails());
-        System.out.println(((User)authentication.getPrincipal()).getEmail());
-
+        User user = ((CustomUserDetails)authentication.getPrincipal()).getUser();
         String name = authentication.getName();
         tokenAuthenticationService.addAuthentication(response, name);
+        response.setContentType("application/json");
+//        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(convertObjectToJson(user));
+
     }
+
+
 }

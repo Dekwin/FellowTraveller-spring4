@@ -1,4 +1,4 @@
-package com.fellowtraveler.model.jwt2;
+package com.fellowtraveler.model.jwtauth;
 
 /**
  * Created by igorkasyanenko on 04.03.17.

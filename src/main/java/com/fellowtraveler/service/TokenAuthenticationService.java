@@ -1,11 +1,10 @@
 package com.fellowtraveler.service;
 
-import com.fellowtraveler.model.jwt2.AuthenticatedUser;
+import com.fellowtraveler.model.jwtauth.AuthenticatedUser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,6 +44,8 @@ public class TokenAuthenticationService  {
             if (username != null)
             {
                 return new AuthenticatedUser(username);
+            }else{
+//                throw new BadCredentialsException("");
             }
         }
         return null;

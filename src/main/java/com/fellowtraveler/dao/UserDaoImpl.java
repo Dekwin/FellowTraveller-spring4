@@ -26,18 +26,18 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
     public User findById(int id) {
         User user = getByKey(id);
         if (user != null) {
-            System.out.println("init");
             Hibernate.initialize(user.getUserProfiles());
         }
         return user;
     }
 
     public User findBySSO(String sso) {
-          logger.info("SSO : {}", sso);
+        logger.info("SSO : {}", sso);
         CriteriaQuery crit = createEntityCriteria();
         Root<User> userRoot =  crit.from(User.class);
         crit.where(getCriteriaBuilder().equal(userRoot.get(User_.ssoId), sso));
         TypedQuery<User> q = getEntityManager().createQuery(crit);
+
         User user = null;
 
         List<User> list = q.getResultList();

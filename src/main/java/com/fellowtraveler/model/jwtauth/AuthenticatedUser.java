@@ -1,4 +1,4 @@
-package com.fellowtraveler.model.jwt2;
+package com.fellowtraveler.model.jwtauth;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

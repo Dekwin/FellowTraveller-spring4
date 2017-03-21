@@ -38,24 +38,32 @@ public class UserServiceImpl implements UserService{
         dao.save(user);
     }
 
-    /*
-     * Since the method is running with Transaction, No need to call hibernate update explicitly.
-     * Just fetch the entity from db and update it with proper values within transaction.
-     * It will be updated in db once transaction ends.
-     */
-    public void updateUser(User user) {
+
+    public User updateUser(User user) {
         User entity = dao.findById(user.getId());
         if(entity!=null){
+            if(user.getSsoId()!=null&&!user.getSsoId().equals(""))
             entity.setSsoId(user.getSsoId());
-            if(!user.getPassword().equals(entity.getPassword())){
-              //  entity.setPassword(passwordEncoder.encode(user.getPassword()));
-            }
+//            if(!user.getPassword().equals(entity.getPassword())){
+//              //  entity.setPassword(passwordEncoder.encode(user.getPassword()));
+//            }
+
+            if(user.getFirstName()!=null&&!user.getFirstName().equals(""))
             entity.setFirstName(user.getFirstName());
+            if(user.getLastName()!=null&&!user.getLastName().equals(""))
             entity.setLastName(user.getLastName());
+            if(user.getEmail()!=null&&!user.getEmail().equals(""))
             entity.setEmail(user.getEmail());
+            if(user.getGender()!=null&&!user.getGender().equals(""))
             entity.setGender(user.getGender());
+            if(user.getUserProfiles()!=null)
             entity.setUserProfiles(user.getUserProfiles());
+            if(user.getCars()!=null)
+            entity.setCars(user.getCars());
+            if(user.getImageUrl()!=null&&!user.getImageUrl().equals(""))
+            entity.setImageUrl(user.getImageUrl());
         }
+        return entity;
     }
 
 

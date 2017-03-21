@@ -33,9 +33,6 @@ public class UserProfileDaoImpl extends AbstractDao<Integer, UserProfile>impleme
         TypedQuery<UserProfile> q = getEntityManager().createQuery(crit);
         UserProfile userProfile = q.getSingleResult();
 
-//        Criteria crit = createEntityCriteria();
-//        crit.add(Restrictions.eq("type", type));
-//        return (UserProfile) crit.uniqueResult();
         return userProfile;
     }
 

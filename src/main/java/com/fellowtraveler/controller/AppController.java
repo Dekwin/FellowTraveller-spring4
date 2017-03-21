@@ -1,41 +1,39 @@
 package com.fellowtraveler.controller;
 
 import com.fellowtraveler.model.User;
-import com.fellowtraveler.model.UserProfile;
-import com.fellowtraveler.model.jwt2.AuthenticatedUser;
+import com.fellowtraveler.model.jwtauth.AuthenticatedUser;
 import com.fellowtraveler.service.TokenAuthenticationService;
-import com.fellowtraveler.service.UserProfileService;
 import com.fellowtraveler.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.AsyncResult;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 /**
  * Created by igorkasyanenko on 27.02.17.
  */
-
+//@EnableAsync
 @Controller
 @RequestMapping("/")
 @SessionAttributes("roles")
 public class AppController {
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    MessageSource messageSource;
 
 
     @RequestMapping("/users") /* Maps to all HTTP actions by default (GET,POST,..)*/
@@ -46,14 +44,17 @@ public class AppController {
     }
 
 
-    @Autowired
-    UserService userService;
 
-//    @Autowired
-//    UserProfileService userProfileService;
-//
-    @Autowired
-    MessageSource messageSource;
+    @RequestMapping("/users1")
+    public @ResponseBody
+    AsyncResult<User> getUsers1() {
+        System.out.println("");
+       AsyncResult<User> userAsyncResult = new AsyncResult<>(new User());//service mock
+        return userAsyncResult;
+    }
+
+
+
 //
 //
 //    /**
@@ -98,15 +99,10 @@ public class AppController {
 
 
 
+
     @RequestMapping(value = { "/signup" }, method = RequestMethod.POST)
     public ResponseEntity<User> signup(
             @Valid @RequestBody User user, BindingResult bindingResult,  HttpServletResponse response)  {
-
-        System.out.println(user.getEmail());
-
-
-
-
 
         if(!userService.isUserSSOUnique(user.getId(), user.getSsoId())){
             FieldError ssoError = new FieldError("user","ssoId",messageSource.getMessage("non.unique.ssoId", new String[]{user.getSsoId()}, Locale.getDefault()));

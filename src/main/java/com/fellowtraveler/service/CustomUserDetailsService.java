@@ -6,6 +6,7 @@ package com.fellowtraveler.service;
 
 import com.fellowtraveler.model.User;
 import com.fellowtraveler.model.UserProfile;
+import com.fellowtraveler.model.userdetails.CustomUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,11 @@ public class CustomUserDetailsService implements UserDetailsService {
             logger.info("User not found");
             throw new UsernameNotFoundException("Username not found");
         }
-        return new org.springframework.security.core.userdetails.User(user.getSsoId(), user.getPassword(),
+        CustomUserDetails cud = new CustomUserDetails(user.getSsoId(), user.getPassword(),
                 true, true, true, true, getGrantedAuthorities(user));
+
+        cud.setUser(user);
+        return cud;
     }
 
 

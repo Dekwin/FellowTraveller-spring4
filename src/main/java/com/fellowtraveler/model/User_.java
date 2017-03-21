@@ -14,6 +14,8 @@ public class User_ {
     public static volatile SingularAttribute<User, String> lastName;
     public static volatile SingularAttribute<User, String> email;
     public static volatile SingularAttribute<User, String> gender;
+    public static volatile SingularAttribute<User, String> imageUrl;
     public static volatile SetAttribute<User, UserProfile> userProfiles;
+    public static volatile SetAttribute<User, Car> cars;
 
 }

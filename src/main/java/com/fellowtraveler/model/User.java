@@ -4,22 +4,20 @@ package com.fellowtraveler.model;
  * Created by igorkasyanenko on 11.12.16.
  */
 
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 //import org.hibernate.validator.constraints.NotEmpty;
 
 
 @Entity
 @Table(name="APP_USER")
-
-public class User extends org.springframework.security.core.userdetails.User implements Serializable{
+//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="@id")
+public class User implements Serializable{
 
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
@@ -48,26 +46,25 @@ public class User extends org.springframework.security.core.userdetails.User imp
     @Column(name="GENDER", nullable=false)
     private String gender;
 
+    @Column(name="IMAGE_URL")
+    private String imageUrl;
 
-    // @NotEmpty
+
+    //@JsonIgnore
+    @OneToMany(mappedBy = "owner",  fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<Car> cars = new ArrayList<Car>();
+
+
+
+    @JsonIgnore
+        // @NotEmpty
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "APP_USER_USER_PROFILE",
             joinColumns = { @JoinColumn(name = "USER_ID") },
             inverseJoinColumns = { @JoinColumn(name = "USER_PROFILE_ID") })
     private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
 
-    public User(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-        this.password = password;
-        this.ssoId = username;
-
-    }
-
-    public User(String username, String password, Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, authorities);
-        this.password = password;
-        this.ssoId = username;
-    }
 
 
     public Integer getId() {
@@ -132,6 +129,22 @@ public class User extends org.springframework.security.core.userdetails.User imp
 
     public void setUserProfiles(Set<UserProfile> userProfiles) {
         this.userProfiles = userProfiles;
+    }
+
+    public void setCars(List<Car> cars){
+        this.cars = cars;
+    }
+
+    public List<Car> getCars(){
+        return this.cars;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @Override
