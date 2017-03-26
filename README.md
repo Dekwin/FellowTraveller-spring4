@@ -108,7 +108,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzYW0xIiwiZXhwIjoxNDg5NjA5O
 
 ### Заголовок 
 Content-Type: application/json
-Authorization: <token>
+Authorization: `<token>`
 
 ### Параметры
 - аналогично signup, можно отправлять только измененные поля
@@ -148,7 +148,7 @@ Authorization: <token>
 Обновление фотографии личного профиля.
 
 ### Заголовок 
-Authorization: <token>
+Authorization: `<token>`
 
 ### Примеры
 
@@ -172,7 +172,7 @@ curl -X POST -H "Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzc29JZCI6InNhbTIiLCJUT0t
 
 ### Заголовок 
 Content-Type: application/json
-Authorization: <token>
+Authorization: `<token>`
 
 ### Параметры
 
@@ -213,7 +213,7 @@ Authorization: <token>
 Добавление фото автомобиля.
 
 ### Заголовок 
-Authorization: <token>
+Authorization: `<token>`
 
 ### Параметры
 
@@ -231,6 +231,6 @@ Authorization: <token>
 Удаление автомобиля
 
 ### Заголовок 
-Authorization: <token>
+Authorization: `<token>`
 
 
