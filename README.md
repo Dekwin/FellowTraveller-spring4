@@ -234,3 +234,56 @@ Authorization: `<token>`
 Authorization: `<token>`
 
 
+
+
+
+# Map API 
+
+
+## POST map/routes
+
+Добавление маршрута.
+
+### Заголовок 
+Authorization: `<token>`
+
+### Параметры
+
+
+Запрос:
+```
+{
+   "title":"title",
+   "car":1,
+   "seats":2,
+   "points":[
+      {
+         "id":1,
+         "latitude":617.9,
+         "longitude":68.7,
+         "collectionData":{
+            "subscribers":null,
+            "datetime":7777777
+         }
+      },
+      {
+         "id":1,
+         "latitude":67.9,
+         "longitude":683.7,
+         "collectionData":null
+      },
+      {
+         "id":1,
+         "latitude":672.9,
+         "longitude":682.7,
+         "collectionData":{
+            "subscribers":null,
+            "datetime":7777777
+         }
+      }
+   ]
+}
+```
+Ответ:
+
+Аналогичен запросу. Статус код: CREATED или код ошибки.
