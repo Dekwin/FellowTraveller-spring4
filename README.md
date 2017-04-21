@@ -337,6 +337,11 @@ Authorization: `<token>`
  @RequestParam("radius2")Double radius2,
  @RequestParam("offset") Optional<Long> offset,
  @RequestParam("limit") Optional<Long> limit
+ 
+ Ответ: аналогичен GET map/routes,
+ но при этом в массиве приходит только часть маршрута(от найденной точки посадки до точки высадки), а в price - сумма ТОЛЬКО за путь, который пришел в массиве points 
+
+P.S. пока что поиск происходит как на плоскости(lon,lat = x,y соотв. radius = обычный радиус на плоскости), а стоимость вычисляется с учетом шара земли.
 
 ### Примеры
 
