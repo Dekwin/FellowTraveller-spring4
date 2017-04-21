@@ -102,6 +102,19 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzYW0xIiwiZXhwIjoxNDg5NjA5O
 **Authorization:  `<token>`** - token, полученный из **POST signin**
 
 
+
+
+## GET users
+получить юзера по id
+### Заголовок
+
+**Authorization:  `<token>`
+
+### Параметры
+*required* **int** `id`. user id
+
+
+
 ## PATCH profile
 
 Обновление информации личного профиля.
@@ -248,35 +261,39 @@ Authorization: `<token>`
 Authorization: `<token>`
 
 ### Параметры
-
-
+- параметры где null - передавать не обязательно
+- price - цена за км
 Запрос:
 ```
 {
+   "id": null,
    "title":"title",
    "car":1,
    "seats":2,
+   "price": 215.12,
    "points":[
       {
-         "id":1,
+         
          "latitude":617.9,
          "longitude":68.7,
          "collectionData":{
+            "id": null,
             "subscribers":null,
             "datetime":7777777
          }
       },
       {
-         "id":1,
+         
          "latitude":67.9,
          "longitude":683.7,
          "collectionData":null
       },
       {
-         "id":1,
+         
          "latitude":672.9,
          "longitude":682.7,
          "collectionData":{
+            "id": null,
             "subscribers":null,
             "datetime":7777777
          }
@@ -287,3 +304,80 @@ Authorization: `<token>`
 Ответ:
 
 Аналогичен запросу. Статус код: CREATED или код ошибки.
+
+
+
+## GET map/routes
+
+Получение маршрута.
+
+### Заголовок 
+Authorization: `<token>`
+
+### Параметры
+@RequestParam("id") Optional<Long> routeId,
+@RequestParam("owner") Optional<Long> ownerId,
+@RequestParam("offset") Optional<Long> offset,
+@RequestParam("limit") Optional<Long> limit
+ 
+ 
+## GET map/routes/search
+
+Получение маршрута по двум радиусам.
+
+### Заголовок 
+Authorization: `<token>`
+
+### Параметры
+ 
+ @RequestParam("latitude1") Double latitude1,
+ @RequestParam("longitude1") Double longitude1,
+ @RequestParam("radius1") Double radius1,
+ @RequestParam("latitude2") Double latitude2,
+ @RequestParam("longitude2") Double longitude2,
+ @RequestParam("radius2")Double radius2,
+ @RequestParam("offset") Optional<Long> offset,
+ @RequestParam("limit") Optional<Long> limit
+
+### Примеры
+
+- map/routes/search?latitude1=2&longitude1=4&radius1=1.1&latitude2=34&longitude2=26&radius2=6
+
+
+## DELETE map/routes/{routeId}
+
+Удаление маршрута.
+
+### Заголовок 
+Authorization: `<token>`
+
+
+
+## GET map/subscribes
+
+Получение маршрутов, на точки которых подписан текущий пользователь.
+
+### Заголовок 
+Authorization: `<token>`
+
+### Параметры
+@RequestParam("offset") Optional<Long> offset,
+@RequestParam("limit") Optional<Long> limit
+
+
+
+## PUT map/subscribes/{collectionDataId}
+
+Подписка на точку маршрута.
+где {collectionDataId} - id точки сбора
+
+### Заголовок 
+Authorization: `<token>`
+
+## DELETE map/subscribes/{collectionDataId}
+
+Отписка с точки маршрута.
+где {collectionDataId} - id точки сбора
+
+### Заголовок 
+Authorization: `<token>`
