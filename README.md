@@ -308,7 +308,7 @@ Authorization: `<token>`
 
 ## GET map/routes
 
-Получение маршрута.
+Получение маршрутов.
 
 ### Заголовок 
 Authorization: `<token>`
@@ -319,6 +319,7 @@ Authorization: `<token>`
 @RequestParam("offset") Optional<Long> offset,
 @RequestParam("limit") Optional<Long> limit
  
+ Ответ: массив аналогичных сущностей, как в POST map/routes
  
 ## GET map/routes/search
 
@@ -339,7 +340,7 @@ Authorization: `<token>`
  @RequestParam("limit") Optional<Long> limit
  
  Ответ: аналогичен GET map/routes,
- но при этом в массиве приходит только часть маршрута(от найденной точки посадки до точки высадки), а в price - сумма ТОЛЬКО за путь, который пришел в массиве points 
+ но при этом в массиве points приходит только часть маршрута(от найденной точки посадки до точки высадки), а в price - сумма ТОЛЬКО за путь, который пришел в массиве points 
 
 P.S. пока что поиск происходит как на плоскости(lon,lat = x,y соотв. radius = обычный радиус на плоскости), а стоимость вычисляется с учетом шара земли.
 
