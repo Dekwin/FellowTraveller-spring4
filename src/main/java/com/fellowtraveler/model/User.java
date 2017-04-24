@@ -16,6 +16,14 @@ import java.util.*;
 
 @Entity
 @Table(name="APP_USER")
+
+
+@NamedQueries({
+        @NamedQuery(name="User.findAll",
+                query="SELECT c FROM User c"),
+        @NamedQuery(name="User.findById",
+                query="SELECT c FROM User c WHERE c.id = :id"),
+})
 //@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="@id")
 public class User implements Serializable{
 
@@ -26,6 +34,7 @@ public class User implements Serializable{
     @Column(name="SSO_ID", unique=true, nullable=false)
     private String ssoId;
 
+    //@JsonIgnore
     @NotEmpty
     @Column(name="PASSWORD", nullable=false)
     private String password;
@@ -49,7 +58,6 @@ public class User implements Serializable{
     @Column(name="IMAGE_URL")
     private String imageUrl;
 
-
     //@JsonIgnore
     @OneToMany(mappedBy = "owner",  fetch = FetchType.EAGER)
     @JsonManagedReference
@@ -58,7 +66,6 @@ public class User implements Serializable{
 
 
     @JsonIgnore
-        // @NotEmpty
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "APP_USER_USER_PROFILE",
             joinColumns = { @JoinColumn(name = "USER_ID") },

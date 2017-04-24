@@ -2,13 +2,11 @@ package com.fellowtraveler.configuration;
 
 import com.fellowtraveler.exceptions.MyAsyncUncaughtExceptionHandler;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -32,7 +30,6 @@ import java.util.concurrent.Executor;
 @ComponentScan(basePackages = "com.fellowtraveler")
 public class AppConfig extends WebMvcConfigurerAdapter implements AsyncConfigurer {
 
-
     @Override
     public Executor getAsyncExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
@@ -42,6 +39,7 @@ public class AppConfig extends WebMvcConfigurerAdapter implements AsyncConfigure
         executor.initialize();
         return executor;
     }
+
     @Override
     public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
         return new MyAsyncUncaughtExceptionHandler();
@@ -70,19 +68,12 @@ public class AppConfig extends WebMvcConfigurerAdapter implements AsyncConfigure
         registry.addResourceHandler("/static/**").addResourceLocations("/static/");
     }
 
-
-
-
-
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
         builder.indentOutput(true);
         converters.add(new MappingJackson2HttpMessageConverter(builder.build()));
     }
-
-
-
 
     /**
      * Configure MessageSource to lookup any validation/error message in internationalized property files
@@ -96,7 +87,8 @@ public class AppConfig extends WebMvcConfigurerAdapter implements AsyncConfigure
         return messageSource;
     }
 
-    /**Optional. It's only required when handling '.' in @PathVariables which otherwise ignore everything after last '.' in @PathVaidables argument.
+    /**
+     * Optional. It's only required when handling '.' in @PathVariables which otherwise ignore everything after last '.' in @PathVaidables argument.
      * It's a known bug in Spring [https://jira.spring.io/browse/SPR-6164], still present in Spring 4.1.7.
      * This is a workaround for this issue.
      */

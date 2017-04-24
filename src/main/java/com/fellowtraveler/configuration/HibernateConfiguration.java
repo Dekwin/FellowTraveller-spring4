@@ -34,7 +34,7 @@ public class HibernateConfiguration {
     @Autowired
     private Environment environment;
 
-    @Bean
+    @Bean("hibernate-unit")
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
@@ -63,7 +63,7 @@ public class HibernateConfiguration {
     }
 
 
-    @Bean
+    @Bean(name="hibernate-transaction")
     @Autowired
     public PlatformTransactionManager transactionManager(final EntityManagerFactory emf) {
         final JpaTransactionManager transactionManager = new JpaTransactionManager();

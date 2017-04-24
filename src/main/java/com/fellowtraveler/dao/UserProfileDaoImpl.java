@@ -25,7 +25,6 @@ public class UserProfileDaoImpl extends AbstractDao<Integer, UserProfile>impleme
 
     public UserProfile findByType(String type) {
 
-
         CriteriaQuery crit = createEntityCriteria();
         Root<UserProfile> userProfileRoot =  crit.from(UserProfile.class);
         System.out.println("find criteria "+crit);
@@ -42,18 +41,10 @@ public class UserProfileDaoImpl extends AbstractDao<Integer, UserProfile>impleme
         CriteriaQuery crit = createEntityCriteria();
         System.out.println("criteria all "+crit);
         Root<UserProfile> userRoot =  crit.from(UserProfile.class);
-
-
         crit.orderBy(getCriteriaBuilder().asc(userRoot.get(UserProfile_.type))).distinct(true);
-
         TypedQuery<UserProfile> q = getEntityManager().createQuery(crit);
-
         List<UserProfile> users = q.getResultList();
-
         return users;
-//        Criteria crit = createEntityCriteria();
-//        crit.addOrder(Order.asc("type"));
-//        return (List<UserProfile>)crit.list();
     }
 
 }

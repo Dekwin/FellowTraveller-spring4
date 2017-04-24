@@ -51,12 +51,11 @@ public class ProfileController {
     }
 
 
-
     private ServletContext servletContext;
 
     @Autowired
-    public void setServletContext(ServletContext servletCtx){
-        this.servletContext=servletCtx;
+    public void setServletContext(ServletContext servletCtx) {
+        this.servletContext = servletCtx;
     }
 
 //    @RequestMapping("/")
@@ -73,19 +72,18 @@ public class ProfileController {
         Resource file = storageService.loadAsResource(filename);
         return ResponseEntity
                 .ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+file.getFilename()+"\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
                 .body(file);
     }
-
 
 
     @PostMapping("/photo")
     public String handleFileUpload(HttpServletRequest request, HttpServletResponse response, @RequestParam("file") MultipartFile file) throws ExecutionException, InterruptedException {
 
 
-        String baseUrl = String.format("%s://%s:%d",request.getScheme(),  request.getServerName(), request.getServerPort());
-        String localFilePath =  storageService.store(file).get();
-        String resultPath = baseUrl+localFilePath;
+        String baseUrl = String.format("%s://%s:%d", request.getScheme(), request.getServerName(), request.getServerPort());
+        String localFilePath = storageService.store(file).get();
+        String resultPath = baseUrl + localFilePath;
         User user = userService.findBySSO(SecurityContextHolder.getContext().getAuthentication().getName());
         deleteImageFromStorage(user.getImageUrl());
 
@@ -93,7 +91,7 @@ public class ProfileController {
         userService.updateUser(user);
         response.setStatus(200);
         response.setContentType("application/json");
-        return "{ \"url\": \""+resultPath+"\" }";
+        return "{ \"url\": \"" + resultPath + "\" }";
     }
 
 
@@ -102,6 +100,7 @@ public class ProfileController {
         User user = userService.findBySSO(SecurityContextHolder.getContext().getAuthentication().getName());
 
         newCar.setOwner(user);
+        user.getCars().add(newCar);
         //user.getCars().add(newCar);
         carService.saveCar(newCar);
         //userService.updateUser(user);
@@ -119,15 +118,17 @@ public class ProfileController {
 
 
     @DeleteMapping("/cars/{id}")
-    public String deleteCar(@PathVariable(value="id") Integer id,HttpServletResponse response) throws ExecutionException, InterruptedException {
+    public String deleteCar(@PathVariable(value = "id") Integer id, HttpServletResponse response) throws ExecutionException, InterruptedException {
         User user = userService.findBySSO(SecurityContextHolder.getContext().getAuthentication().getName());
-        Car  car = carService.findById(id);
-        if(car != null && car.getOwner().equals(user)) {
-                deleteImageFromStorage(car.getImageUrl());
-                carService.deleteCarById(car.getId());
-                response.setStatus(200);
-                return "";
-        }else{
+        Car car = carService.findById(id);
+        if (car != null && car.getOwner().getId().equals(user.getId())) {
+            deleteImageFromStorage(car.getImageUrl());
+            carService.deleteCarById(car.getId());
+
+
+            response.setStatus(200);
+            return "";
+        } else {
             response.setStatus(500);
             response.setContentType("application/json");
             return "{ \"error\": \"Car not found\" }";
@@ -135,9 +136,7 @@ public class ProfileController {
     }
 
 
-    private String subfolder = "/static/uploads/images/";
-
-    private void deleteImageFromStorage(String path){
+    private void deleteImageFromStorage(String path) {
         if (path != null) {
 
 //            Pattern p = Pattern.compile("/static/uploads/images/.+");
@@ -146,7 +145,7 @@ public class ProfileController {
             //System.out.println(path.substring(0,path.indexOf("/static/uploads/images/")));
 
             String substr = "/static/uploads/images/";
-            String filePath = path.substring(path.indexOf(substr),path.length());
+            String filePath = path.substring(path.indexOf(substr), path.length());
             storageService.deleteOne(filePath);
 
 //            if (m.find()) {
@@ -156,18 +155,18 @@ public class ProfileController {
     }
 
     @PostMapping("/cars/{id}/photo")
-    public String updateCarPhoto(@PathVariable(value="id") Integer id,HttpServletRequest request, HttpServletResponse response, @RequestParam("file") MultipartFile file) throws ExecutionException, InterruptedException {
+    public String updateCarPhoto(@PathVariable(value = "id") Integer id, HttpServletRequest request, HttpServletResponse response, @RequestParam("file") MultipartFile file) throws ExecutionException, InterruptedException {
 
-        String baseUrl = String.format("%s://%s:%d",request.getScheme(),  request.getServerName(), request.getServerPort());
+        String baseUrl = String.format("%s://%s:%d", request.getScheme(), request.getServerName(), request.getServerPort());
 
-        String localFilePath =  storageService.store(file).get();
+        String localFilePath = storageService.store(file).get();
 
-        String resultPath = baseUrl+localFilePath;
+        String resultPath = baseUrl + localFilePath;
 
         User user = userService.findBySSO(SecurityContextHolder.getContext().getAuthentication().getName());
-        Car  car = carService.findById(id);
+        Car car = carService.findById(id);
 
-        if(car!= null && car.getOwner().equals(user)) {
+        if (car != null && car.getOwner().equals(user)) {
             deleteImageFromStorage(car.getImageUrl());
             car.setImageUrl(resultPath);
             carService.updateCar(car);
@@ -175,7 +174,7 @@ public class ProfileController {
             response.setContentType("application/json");
             return "{ \"url\": \"" + resultPath + "\" }";
 
-        }else{
+        } else {
             response.setStatus(500);
             response.setContentType("application/json");
             return "{ \"error\": \"Car not found\" }";
@@ -186,18 +185,9 @@ public class ProfileController {
     public ResponseEntity<User> updateUserInfo(@RequestBody User newUser) throws ExecutionException, InterruptedException {
         User user = userService.findBySSO(SecurityContextHolder.getContext().getAuthentication().getName());
 
+        newUser.setId(user.getId());
+        return new ResponseEntity<User>(userService.updateUser(newUser), HttpStatus.OK);
 
-        System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
-        System.out.println("new us "+newUser.getSsoId());
-        System.out.println("user "+user);
-        if(user.getSsoId().equals(newUser.getSsoId())){
-
-            System.out.println("id "+newUser.getId());
-            System.out.println("user id "+user.getId());
-            return new ResponseEntity<User>(userService.updateUser(newUser), HttpStatus.OK);
-        }else {
-            return new ResponseEntity<User>(user, HttpStatus.CONFLICT);
-        }
     }
 
     @ExceptionHandler(StorageFileNotFoundException.class)

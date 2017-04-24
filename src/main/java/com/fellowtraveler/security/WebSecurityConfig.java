@@ -35,8 +35,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Qualifier("customUserDetailsService")
     UserDetailsService userDetailsService;
 
-    //@Autowired
-    //PersistentTokenRepository tokenRepository;
+    @Autowired
+    TokenAuthenticationManager tokenAuthenticationManager;
 
     @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
@@ -46,17 +46,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
+    @Bean(name = "restTokenAuthenticationFilter")
+    public JWTLoginFilter restTokenAuthenticationFilter() {
+        JWTLoginFilter restTokenAuthenticationFilter = new JWTLoginFilter();
+        // tokenAuthenticationManager.setUserDetailsService(userDetailsService);
+        restTokenAuthenticationFilter.setAuthenticationManager(tokenAuthenticationManager);
+        return restTokenAuthenticationFilter;
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // Create a default account
 
         auth.userDetailsService(userDetailsService);
         auth.authenticationProvider(authenticationProvider());
-
-//        auth.inMemoryAuthentication()
-//                .withUser("admin")
-//                .password("password")
-//                .roles("ADMIN");
     }
 
     @Bean
@@ -82,17 +85,34 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // disable caching
 
-        http.csrf().disable() // disable csrf for our requests.
+
+        http.csrf().disable()
+                .headers().frameOptions().sameOrigin()
+                .and()
+
+                .addFilterAfter(restTokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JWTAuthenticationFilter(), JWTLoginFilter.class)
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers(HttpMethod.POST,"/signup").permitAll()
-                .antMatchers(HttpMethod.GET,"/static/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/signup").permitAll()
+
+                .antMatchers(HttpMethod.GET, "/static/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/signin").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                // We filter the api/login requests
-                .addFilterAfter(new JWTLoginFilter("/signin", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
-                // And filter other requests to check the presence of JWT in header
-                .addFilterAfter(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+                .antMatchers("/*").authenticated();
+
+
+//        http.csrf().disable() // disable csrf for our requests.
+//                .authorizeRequests()
+//                .antMatchers("/").permitAll()
+//                .antMatchers(HttpMethod.POST,"/signup").permitAll()
+//                .antMatchers(HttpMethod.GET,"/static/**").permitAll()
+//                .antMatchers(HttpMethod.POST, "/signin").permitAll()
+//                .anyRequest().authenticated()
+//                .and()
+//                // We filter the api/login requests
+//                .addFilterAfter(new JWTLoginFilter("/rest/**", tokenAuthenticationManager), UsernamePasswordAuthenticationFilter.class);
+//
+//                // And filter other requests to check the presence of JWT in header
+//               // .addFilterAfter(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

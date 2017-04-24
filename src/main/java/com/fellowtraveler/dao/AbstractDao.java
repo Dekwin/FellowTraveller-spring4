@@ -5,9 +5,11 @@ package com.fellowtraveler.dao;
  */
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.io.Serializable;
@@ -23,7 +25,7 @@ public abstract class AbstractDao<PK extends Serializable, T> {
     }
 
     @Autowired
-    @PersistenceContext
+    @PersistenceContext(unitName = "hibernate-unit", type = PersistenceContextType.TRANSACTION)
     private EntityManager entityManager;
 
     protected CriteriaBuilder getCriteriaBuilder(){
@@ -55,5 +57,7 @@ public abstract class AbstractDao<PK extends Serializable, T> {
     protected CriteriaQuery createEntityCriteria(){
       return   getCriteriaBuilder().createQuery(persistentClass);
     }
+
+
 
 }

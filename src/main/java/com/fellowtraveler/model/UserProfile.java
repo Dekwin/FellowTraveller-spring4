@@ -11,14 +11,15 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name="USER_PROFILE")
-public class UserProfile implements Serializable{
+@Table(name = "USER_PROFILE")
+public class UserProfile implements Serializable {
 
-    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @JsonView(Profile.PublicView.class)
-    @Column(name="TYPE", length=15, unique=true, nullable=false)
+    @Column(name = "TYPE", length = 15, unique = true, nullable = false)
     private String type = UserProfileType.USER.getUserProfileType();
 
     public Integer getId() {
@@ -72,8 +73,6 @@ public class UserProfile implements Serializable{
     public String toString() {
         return "UserProfile [id=" + id + ", type=" + type + "]";
     }
-
-
 
 
 }

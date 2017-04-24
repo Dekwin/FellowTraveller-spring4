@@ -13,11 +13,9 @@ import java.util.List;
  */
 
 
-
-
 @Service("userProfileService")
-@Transactional
-public class UserProfileServiceImpl implements UserProfileService{
+@org.springframework.transaction.annotation.Transactional(value = "hibernate-transaction")
+public class UserProfileServiceImpl implements UserProfileService {
 
     @Autowired
     UserProfileDao dao;
@@ -26,7 +24,7 @@ public class UserProfileServiceImpl implements UserProfileService{
         return dao.findById(id);
     }
 
-    public UserProfile findByType(String type){
+    public UserProfile findByType(String type) {
         return dao.findByType(type);
     }
 

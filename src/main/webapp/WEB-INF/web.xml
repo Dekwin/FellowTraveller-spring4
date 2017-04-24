@@ -5,13 +5,6 @@
          version="3.1">
 
 
-    <!--<jsp-config>-->
-    <!--<taglib>-->
-        <!--<taglib-uri>http://java.sun.com/jstl/core</taglib-uri>-->
-        <!--<taglib-location>/WEB-INF/lib/taglibs-standard-impl-1.2.5.jar</taglib-location>-->
-    <!--</taglib>-->
-    <!--</jsp-config>-->
-
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/applicationContext.xml</param-value>
@@ -31,29 +24,6 @@
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-
-
-
-
-
-
-
-    <!--<filter>-->
-        <!--<filter-name>springSecurityFilterChain</filter-name>-->
-        <!--<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>-->
-    <!--</filter>-->
-    <!--<filter-mapping>-->
-        <!--<filter-name>springSecurityFilterChain</filter-name>-->
-        <!--<url-pattern>/*</url-pattern>-->
-    <!--</filter-mapping>-->
-
-
-
-    <!--<error-page>-->
-        <!--<error-code>404</error-code>-->
-        <!--<location>/WEB-INF/views/errors/404.jsp</location>-->
-    <!--</error-page>-->
-
 
 
 

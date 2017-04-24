@@ -1,19 +1,16 @@
 package com.fellowtraveler.service.storage;
 
-import org.apache.tomcat.util.http.fileupload.FileUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.lang.annotation.Native;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -41,8 +38,8 @@ public class FileSystemStorageService implements StorageService {
 
     @Override
     @Async
-    public Future<String> store(MultipartFile file){
-        String filename = UUID.randomUUID().toString()+"-"+file.getOriginalFilename();
+    public Future<String> store(MultipartFile file) {
+        String filename = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
         try {
             if (file.isEmpty()) {
                 throw new StorageException("Failed to store empty file " + filename);
@@ -50,21 +47,6 @@ public class FileSystemStorageService implements StorageService {
 
 
             Path storageLocation = this.rootLocation.resolve(filename);
-
-//
-            System.out.println("!!!upload file at path: "+storageLocation);
-            System.out.println("!!!filename : "+filename);
-            System.out.println("!!!rootloc : "+this.rootLocation);
-//            File convFile = new File( file.getOriginalFilename());
-//            file.transferTo(convFile);
-//
-//            convFile.setReadable(true, false);
-//            convFile.setExecutable(true, false);
-//            convFile.setWritable(true, false);
-//
-//            Files.copy( convFile.toPath(),this.rootLocation.resolve(filename) );
-
-
 
             Files.copy(file.getInputStream(), storageLocation);
 
@@ -77,15 +59,12 @@ public class FileSystemStorageService implements StorageService {
             Files.setPosixFilePermissions(this.rootLocation.resolve(filename), perms);
 //
 
-
-
         } catch (IOException e) {
             throw new StorageException("Failed to store file " + filename, e);
         } finally {
-                return new AsyncResult<>("/fellowTraveler_war_exploded1"+localPath+"/"+filename);
+            return new AsyncResult<>("/fellowTraveler_war_exploded1" + localPath + "/" + filename);
         }
     }
-
 
 
     @Override
@@ -109,10 +88,9 @@ public class FileSystemStorageService implements StorageService {
         try {
             Path file = load(filename);
             Resource resource = new UrlResource(file.toUri());
-            if(resource.exists() || resource.isReadable()) {
+            if (resource.exists() || resource.isReadable()) {
                 return resource;
-            }
-            else {
+            } else {
                 throw new StorageFileNotFoundException("Could not read file: " + filename);
 
             }
@@ -130,11 +108,7 @@ public class FileSystemStorageService implements StorageService {
     public void deleteOne(String fileName) {
         try {
 
-            System.out.println("!!!delete file at path: "+applicationRoot.toString()+fileName);
-
-            System.out.println("!!!applicationRoot.toString() = "+applicationRoot.toString()+" # "+fileName);
-
-          Files.deleteIfExists(Paths.get(applicationRoot.toString()+fileName));
+            Files.deleteIfExists(Paths.get(applicationRoot.toString() + fileName));
         } catch (IOException e) {
             throw new StorageFileNotFoundException("Could not read file: " + rootLocation, e);
         }

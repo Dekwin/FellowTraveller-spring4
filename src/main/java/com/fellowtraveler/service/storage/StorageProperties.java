@@ -18,11 +18,11 @@ public class StorageProperties {
     private String location = "/static/uploads/images";
 
     public String getLocation() {
-       return location;
+        return location;
     }
 
-    public String getPathToStore(String location){
-       return servletContext.getRealPath(location);
+    public String getPathToStore(String location) {
+        return servletContext.getRealPath(location);
     }
 
     public void setLocation(String location) {

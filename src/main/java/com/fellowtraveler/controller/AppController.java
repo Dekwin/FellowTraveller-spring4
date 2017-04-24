@@ -1,15 +1,20 @@
 package com.fellowtraveler.controller;
 
 import com.fellowtraveler.model.User;
+import com.fellowtraveler.model.jwtauth.AccountCredentials;
 import com.fellowtraveler.model.jwtauth.AuthenticatedUser;
-import com.fellowtraveler.service.TokenAuthenticationService;
+import com.fellowtraveler.model.map.CollectionData;
+import com.fellowtraveler.model.map.Route;
+import com.fellowtraveler.service.map.PointService;
 import com.fellowtraveler.service.UserService;
+import com.fellowtraveler.service.auth.JWTService;
+import com.fellowtraveler.model.map.RoutePoint;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.AsyncResult;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -18,7 +23,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 /**
  * Created by igorkasyanenko on 27.02.17.
@@ -35,81 +43,39 @@ public class AppController {
     @Autowired
     MessageSource messageSource;
 
+    @Autowired
+    JWTService jwtService;
 
-    @RequestMapping("/users") /* Maps to all HTTP actions by default (GET,POST,..)*/
-    public @ResponseBody String getUsers() {
-        System.out.println("");
+    @Autowired
+    PointService pointService;
+
+
+    @RequestMapping("/rest/usersnull")
+    public @ResponseBody String getUsers1() {
+
         return "{\"users\":[{\"firstname\":\"Richard\", \"lastname\":\"Feynman\"}," +
                 "{\"firstname\":\"Marie\",\"lastname\":\"Curie\"}]}";
     }
 
 
-
-    @RequestMapping("/users1")
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
     public @ResponseBody
-    AsyncResult<User> getUsers1() {
-        System.out.println("");
-       AsyncResult<User> userAsyncResult = new AsyncResult<>(new User());//service mock
-        return userAsyncResult;
+    ResponseEntity<User> getUsers(@RequestParam("id") Optional<Long> userId) {
+        User foundUser = userService.findById(userId.get().intValue());
+        if(foundUser != null) {
+            return new ResponseEntity<User>(foundUser, HttpStatus.OK);
+        }else {
+           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
-
-
-
-//
-//
-//    /**
-//     * This method will list all existing users.
-//     */
-//    @RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
-//    public String listUsers(ModelMap model) {
-//
-//        List<User> users = userService.findAllUsers();
-//        model.addAttribute("users", users);
-//        model.addAttribute("loggedinuser", getPrincipal());
-//        return "userslist";
-//    }
-//
-//    /**
-//     * This method will provide the medium to add a new user.
-//     */
-//    @RequestMapping(value = { "/newuser" }, method = RequestMethod.GET)
-//    public String newUser(ModelMap model) {
-//        User user = new User();
-//        model.addAttribute("user", user);
-//        model.addAttribute("edit", false);
-//        model.addAttribute("loggedinuser", getPrincipal());
-//        return "registration";
-//    }
-//
-//
-//    //-------------------Retrieve All Users--------------------------------------------------------
-//
-//
-//    @ResponseBody
-//    @RequestMapping(value = "/user/", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-//    public List<User> listAllUsers() {
-//        List<User> users = userService.findAllUsers();
-////        if(users.isEmpty()){
-////            return new ResponseEntity<List<UserProfile>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
-////        }
-//        return  users;
-//    }
-//
-
-
-
-
 
     @RequestMapping(value = { "/signup" }, method = RequestMethod.POST)
     public ResponseEntity<User> signup(
-            @Valid @RequestBody User user, BindingResult bindingResult,  HttpServletResponse response)  {
+            @Valid @RequestBody User user, BindingResult bindingResult,  HttpServletResponse response) throws Exception {
 
         if(!userService.isUserSSOUnique(user.getId(), user.getSsoId())){
             FieldError ssoError = new FieldError("user","ssoId",messageSource.getMessage("non.unique.ssoId", new String[]{user.getSsoId()}, Locale.getDefault()));
             bindingResult.addError(ssoError);
-
-            //new MethodArgumentNotValidException();
-
             IllegalArgumentException error = new IllegalArgumentException(ssoError.getDefaultMessage());
           // new  MethodArgumentNotValidException().getBindingResult().addError(ssoError);
             throw error;
@@ -119,180 +85,25 @@ public class AppController {
         userService.saveUser(user);
 
         String name = user.getSsoId();
+
+        jwtService.addAuthentication(response,user.getSsoId(),user.getPassword());
+
         SecurityContextHolder.getContext().setAuthentication(new AuthenticatedUser(name));
-        new TokenAuthenticationService().addAuthentication(response, name);
-
-      //  model.addAttribute("success", "User " + user.getFirstName() + " "+ user.getLastName() + " registered successfully");
-
 
         return new ResponseEntity<User>(user, HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = { "/signin" }, method = RequestMethod.POST)
+    public ResponseEntity<User> signin(
+             @RequestBody AccountCredentials credentials,  HttpServletResponse response) throws Exception {
 
 
-//    /**
-//     * This method will be called on form submission, handling POST request for
-//     * saving user in database. It also validates the user input
-//     */
-//    @RequestMapping(value = { "/newuser" }, method = RequestMethod.POST)
-//    public String saveUser(@Valid User user, BindingResult result,
-//                           ModelMap model) {
-//
-//        if (result.hasErrors()) {
-//            return "registration";
-//        }
-//
-//        /*
-//         * Preferred way to achieve uniqueness of field [sso] should be implementing custom @Unique annotation
-//         * and applying it on field [sso] of Model class [User].
-//         *
-//         * Below mentioned peace of code [if block] is to demonstrate that you can fill custom errors outside the validation
-//         * framework as well while still using internationalized messages.
-//         *
-//         */
-//        if(!userService.isUserSSOUnique(user.getId(), user.getSsoId())){
-//            FieldError ssoError = new FieldError("user","ssoId",messageSource.getMessage("non.unique.ssoId", new String[]{user.getSsoId()}, Locale.getDefault()));
-//            result.addError(ssoError);
-//            return "registration";
-//        }
-//
-//        userService.saveUser(user);
-//
-//        model.addAttribute("success", "User " + user.getFirstName() + " "+ user.getLastName() + " registered successfully");
-//     //   model.addAttribute("loggedinuser", getPrincipal());
-//        //return "success";
-//        return "registrationsuccess";
-//    }
-//
-//    @InitBinder
-//    public void dataBinding(WebDataBinder binder) {
-//        binder.registerCustomEditor(Set.class, "userProfiles", new CustomCollectionEditor(Set.class) {
-//            @Override
-//            protected Object convertElement(Object element) {
-//                Integer id = Integer.parseInt((String) element);
-//                UserProfile profile = userProfileService.findById(id);
-//                return profile;
-//            }
-//        });
-//    }
-//
-//    /**
-//     * This method will provide the medium to update an existing user.
-//     */
-//    @RequestMapping(value = { "/edit-user-{ssoId}" }, method = RequestMethod.GET)
-//    public String editUser(@PathVariable String ssoId, ModelMap model) {
-//        User user = userService.findBySSO(ssoId);
-//        model.addAttribute("user", user);
-//        model.addAttribute("edit", true);
-//        model.addAttribute("loggedinuser", getPrincipal());
-//        return "registration";
-//    }
-//
-//    /**
-//     * This method will be called on form submission, handling POST request for
-//     * updating user in database. It also validates the user input
-//     */
-//    @RequestMapping(value = { "/edit-user-{ssoId}" }, method = RequestMethod.POST)
-//    public String updateUser(@Valid User user, BindingResult result,
-//                             ModelMap model, @PathVariable String ssoId) {
-//
-//        if (result.hasErrors()) {
-//            return "registration";
-//        }
-//
-//        /*//Uncomment below 'if block' if you WANT TO ALLOW UPDATING SSO_ID in UI which is a unique key to a User.
-//        if(!userService.isUserSSOUnique(user.getId(), user.getSsoId())){
-//            FieldError ssoError =new FieldError("user","ssoId",messageSource.getMessage("non.unique.ssoId", new String[]{user.getSsoId()}, Locale.getDefault()));
-//            result.addError(ssoError);
-//            return "registration";
-//        }*/
-//
-//
-//        userService.updateUser(user);
-//
-//        model.addAttribute("success", "User " + user.getFirstName() + " "+ user.getLastName() + " updated successfully");
-//        model.addAttribute("loggedinuser", getPrincipal());
-//        return "registrationsuccess";
-//    }
-//
-//
-//    /**
-//     * This method will delete an user by it's SSOID value.
-//     */
-//    @RequestMapping(value = { "/delete-user-{ssoId}" }, method = RequestMethod.GET)
-//    public String deleteUser(@PathVariable String ssoId) {
-//        userService.deleteUserBySSO(ssoId);
-//        return "redirect:/list";
-//    }
-//
-//
-//    /**
-//     * This method will provide UserProfile list to views
-//     */
-//    @ModelAttribute("roles")
-//    public List<UserProfile> initializeProfiles() {
-//        return userProfileService.findAll();
-//    }
-//
-//    /**
-//     * This method handles Access-Denied redirect.
-//     */
-//    @RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
-//    public String accessDeniedPage(ModelMap model) {
-//        model.addAttribute("loggedinuser", getPrincipal());
-//        return "accessDenied";
-//    }
-//
-//    /**
-//     * This method handles login GET requests.
-//     * If users is already logged-in and tries to goto login page again, will be redirected to list page.
-//     */
-//    @RequestMapping(value = "/login", method = RequestMethod.GET)
-//    public String loginPage() {
-//        if (isCurrentAuthenticationAnonymous()) {
-//            return "login";
-//        } else {
-//            System.out.println("redirect list");
-//            return "redirect:/list";
-//        }
-//    }
+        User user = jwtService.addAuthentication(response,credentials.getSsoId(),credentials.getPassword());
 
-    /**
-     * This method handles logout requests.
-     * Toggle the handlers if you are RememberMe functionality is useless in your app.
-     */
-//    @RequestMapping(value="/logout", method = RequestMethod.GET)
-//    public String logoutPage (HttpServletRequest request, HttpServletResponse response){
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        if (auth != null){
-//            //new SecurityContextLogoutHandler().logout(request, response, auth);
-//            persistentTokenBasedRememberMeServices.logout(request, response, auth);
-//            SecurityContextHolder.getContext().setAuthentication(null);
-//        }
-//        return "redirect:/login?logout";
-//    }
 
-//    /**
-//     * This method returns the principal[user-name] of logged-in user.
-//     */
-//    private String getPrincipal(){
-//        String userName = null;
-//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        if (principal instanceof UserDetails) {
-//            userName = ((UserDetails)principal).getSsoId();
-//        } else {
-//            userName = principal.toString();
-//        }
-//        return userName;
-//    }
-//
-//    /**
-//     * This method returns true if users is already authenticated [logged-in], else false.
-//     */
-//    private boolean isCurrentAuthenticationAnonymous() {
-//        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        return authenticationTrustResolver.isAnonymous(authentication);
-//    }
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
+
 
 
 }

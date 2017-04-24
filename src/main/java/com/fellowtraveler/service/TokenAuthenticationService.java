@@ -8,13 +8,15 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 import java.util.Date;
 
 /**
  * Created by igorkasyanenko on 05.03.17.
  */
 @Service("tokenAuthenticationService")
-public class TokenAuthenticationService  {
+@org.springframework.transaction.annotation.Transactional(value = "hibernate-transaction")
+public class TokenAuthenticationService {
     private long EXPIRATIONTIME = 1000 * 60 * 60 * 24 * 10; // 10 days
     private String secret = "ThisIsASecret";
     private String tokenPrefix = "Bearer";
@@ -41,10 +43,9 @@ public class TokenAuthenticationService  {
                     .parseClaimsJws(token)
                     .getBody()
                     .getSubject();
-            if (username != null)
-            {
+            if (username != null) {
                 return new AuthenticatedUser(username);
-            }else{
+            } else {
 //                throw new BadCredentialsException("");
             }
         }
