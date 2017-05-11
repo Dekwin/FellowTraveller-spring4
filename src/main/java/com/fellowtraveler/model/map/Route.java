@@ -13,6 +13,7 @@ public class Route {
     private Long owner;
     private String title;
     private Float price;
+    private Double priceForRoute;
     private Long car;
     private Integer seats;
 
@@ -48,6 +49,14 @@ public class Route {
 
     public void setPrice(Float price) {
         this.price = price;
+    }
+
+    public Double getPriceForRoute() {
+        return priceForRoute;
+    }
+
+    public void setPriceForRoute(Double priceForRoute) {
+        this.priceForRoute = priceForRoute;
     }
 
     public Long getCar() {

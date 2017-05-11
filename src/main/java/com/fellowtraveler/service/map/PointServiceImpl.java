@@ -48,6 +48,10 @@ public class PointServiceImpl implements PointService {
 
     @Override
     public Long createRoute(Route route) {
+        if (route.getPriceForRoute() != null && route.getPrice() == null) {
+            double pricePerKm = calculatePricePerKmByPriceForRoute(route);
+            route.setPrice(Double.valueOf(pricePerKm).floatValue());
+        }
         return pointRepository.createRoute(spatialLayerName, route);
     }
 
@@ -70,71 +74,61 @@ public class PointServiceImpl implements PointService {
     @Override
     public List<Route> findRoutesBySubscriberId(Long subscriberId, Long offset, Long limit) {
         if (offset == null || limit == null || offset == 0 && limit == 0) {
-            return pointRepository.findRoutesBySubscriberId(subscriberId);
+
+            List<Route> routes = pointRepository.findRoutesBySubscriberId(subscriberId);
+            for (Route route : routes) {
+                setPriceForRoute(route);
+            }
+            return routes;
         } else {
-            return pointRepository.findRoutesBySubscriberId(subscriberId, offset, limit);
+            List<Route> routes = pointRepository.findRoutesBySubscriberId(subscriberId, offset, limit);
+            for (Route route : routes) {
+                setPriceForRoute(route);
+            }
+            return routes;
+
         }
     }
 
     @Override
     public List<Route> findAllRoutes(Long offset, Long limit) {
         if (offset == null || limit == null || offset == 0 && limit == 0) {
-            return pointRepository.findAllRoutes();
+            List<Route> routes = pointRepository.findAllRoutes();
+            for (Route route : routes) {
+                setPriceForRoute(route);
+            }
+            return routes;
         } else {
-            return pointRepository.findAllRoutes(offset, limit);
+            List<Route> routes = pointRepository.findAllRoutes(offset, limit);
+            for (Route route : routes) {
+                setPriceForRoute(route);
+            }
+            return routes;
         }
     }
 
     @Override
     public List<Route> findRoutesByOwnerId(long ownerId, Long offset, Long limit) {
         if (offset == null || limit == null || offset == 0 && limit == 0) {
-            return pointRepository.findRoutesByOwnerId(ownerId);
+            List<Route> routes = pointRepository.findRoutesByOwnerId(ownerId);
+            for (Route route : routes) {
+                setPriceForRoute(route);
+            }
+            return routes;
         } else {
-            return pointRepository.findRoutesByOwnerId(ownerId, offset, limit);
+            List<Route> routes = pointRepository.findRoutesByOwnerId(ownerId, offset, limit);
+            for (Route route : routes) {
+                setPriceForRoute(route);
+            }
+            return routes;
         }
     }
 
     @Override
     public Route findRouteById(long id) {
-        return pointRepository.findRouteById(id);
-    }
-
-
-    public double calculateSubroutePrice(Route route) {
-
-        double priceForSubroute = 0;
-
-        if (route.getPoints().size() > 1) {
-            RoutePoint prevPoint = route.getPoints().get(0);
-            for (int i = 1; i < route.getPoints().size(); i++) {
-                RoutePoint currentPoint = route.getPoints().get(i);
-
-                //price for whole
-                priceForSubroute += getDistanceFromLatLonInKm(prevPoint.getLatitude(), prevPoint.getLongitude(), currentPoint.getLatitude(), currentPoint.getLongitude()) * route.getPrice();
-
-                prevPoint = currentPoint;
-            }
-        }
-
-        return priceForSubroute;
-    }
-
-
-    private double getDistanceFromLatLonInKm(double lat1, double lon1, double lat2, double lon2) {
-        // Radius of the earth in km
-        double dLat = deg2rad(lat2 - lat1);  // deg2rad below
-        double dLon = deg2rad(lon2 - lon1);
-        double a =
-                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-                                Math.sin(dLon / 2) * Math.sin(dLon / 2);
-        double c = 2. * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        double d = EARTH_RADIUS * c; // Distance in km
-        return d;
-    }
-
-    double deg2rad(double deg) {
-        return deg * (Math.PI / 180);
+        Route route = pointRepository.findRouteById(id);
+        setPriceForRoute(route);
+        return route;
     }
 
     @Override
@@ -187,6 +181,66 @@ public class PointServiceImpl implements PointService {
 
         return suitableSubroutes;
     }
+
+
+
+    //calculation methods
+
+    private void setPriceForRoute(Route route) {
+        if (route != null) {
+            route.setPriceForRoute(calculatePriceForRouteByPricePerKm(route));
+        }
+    }
+
+    private double calculatePriceForRouteByPricePerKm(Route route) {
+        return calculateRouteDistance(route) * route.getPrice();
+    }
+
+    private double calculateSubroutePrice(Route route) {
+        double priceForSubroute = calculateRouteDistance(route) * route.getPrice();
+        return priceForSubroute;
+    }
+
+    private double calculatePricePerKmByPriceForRoute(Route route) {
+        return route.getPriceForRoute() / calculateRouteDistance(route);
+    }
+
+    private double calculateRouteDistance(Route route) {
+        double routeDistance = 0;
+
+        if (route.getPoints().size() > 1) {
+            RoutePoint prevPoint = route.getPoints().get(0);
+            for (int i = 1; i < route.getPoints().size(); i++) {
+                RoutePoint currentPoint = route.getPoints().get(i);
+
+                //price for whole
+                routeDistance += getDistanceFromLatLonInKm(prevPoint.getLatitude(), prevPoint.getLongitude(), currentPoint.getLatitude(), currentPoint.getLongitude());
+
+                prevPoint = currentPoint;
+            }
+        }
+
+        return routeDistance;
+    }
+
+
+    private double getDistanceFromLatLonInKm(double lat1, double lon1, double lat2, double lon2) {
+        // Radius of the earth in km
+        double dLat = deg2rad(lat2 - lat1);  // deg2rad below
+        double dLon = deg2rad(lon2 - lon1);
+        double a =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+                                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        double c = 2. * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double d = EARTH_RADIUS * c; // Distance in km
+        return d;
+    }
+
+    double deg2rad(double deg) {
+        return deg * (Math.PI / 180);
+    }
+
 
     private boolean intersectsCircle(double x1, double y1, double x2, double y2, double xC, double yC, double R) {
         x1 -= xC;
