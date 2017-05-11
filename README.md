@@ -263,6 +263,8 @@ Authorization: `<token>`
 ### Параметры
 - параметры где null - передавать не обязательно
 - price - цена за км
+- priceForRoute - цена за весь путь (присылать price = null и priceForRoute != null для того, чтобы указать цену за весь путь)
+
 Запрос:
 ```
 {
@@ -271,6 +273,7 @@ Authorization: `<token>`
    "car":1,
    "seats":2,
    "price": 215.12,
+   "priceForRoute": 2222.33
    "points":[
       {
          

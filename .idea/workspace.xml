@@ -8,8 +8,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ecf03573-ba17-4d2b-98f7-78d7f70123bb" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fellowtraveler/model/map/Route.java" afterPath="$PROJECT_DIR$/src/main/java/com/fellowtraveler/model/map/Route.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fellowtraveler/service/map/PointServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/fellowtraveler/service/map/PointServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -57,12 +56,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="application.properties" pinned="false" current-in-tab="true">
+      <file leaf-file-name="application.properties" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="150">
               <caret line="10" column="45" lean-forward="true" selection-start-line="10" selection-start-column="45" selection-end-line="10" selection-end-column="45" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="258">
+                <caret line="269" column="1" lean-forward="true" selection-start-line="269" selection-start-column="1" selection-end-line="269" selection-end-column="1" />
+                <folding />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -77,28 +89,6 @@
                 <element signature="e#1017#1018#0" expanded="true" />
                 <element signature="e#1075#1076#0" expanded="true" />
                 <element signature="e#1125#1126#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserProfile.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/fellowtraveler/model/UserProfile.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#585#586#0" expanded="false" />
-                <element signature="e#610#611#0" expanded="false" />
-                <element signature="e#647#648#0" expanded="false" />
-                <element signature="e#675#676#0" expanded="false" />
-                <element signature="e#706#707#0" expanded="false" />
-                <element signature="e#733#734#0" expanded="false" />
-                <element signature="e#773#774#0" expanded="false" />
-                <element signature="e#805#806#0" expanded="false" />
-                <element signature="e#1742#1743#0" expanded="false" />
-                <element signature="e#1813#1814#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -273,7 +263,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/fellowtraveler/model/Customer.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/dispatcher-servlet.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/fellowtraveler/repository/CustomerRep.java" />
@@ -324,6 +313,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/fellowtraveler/configuration/AppConfig.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fellowtraveler/model/map/Route.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fellowtraveler/service/map/PointServiceImpl.java" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -1512,7 +1502,7 @@
       <workItem from="1493288443522" duration="523000" />
       <workItem from="1493359890034" duration="1988000" />
       <workItem from="1494441604081" duration="224000" />
-      <workItem from="1494527229510" duration="2718000" />
+      <workItem from="1494527229510" duration="3107000" />
     </task>
     <task id="LOCAL-00001" summary="initial">
       <created>1488840070813</created>
@@ -1535,7 +1525,14 @@
       <option name="project" value="LOCAL" />
       <updated>1493050438014</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="priceForRoute added">
+      <created>1494530260104</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1494530260104</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1571,7 +1568,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="294550000" />
+    <option name="totallyTimeSpent" value="294939000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1606,7 +1603,7 @@
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32808024" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4555874" sideWeight="0.49697885" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4555874" sideWeight="0.49697885" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32943144" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295129" sideWeight="0.49697885" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2854985" sideWeight="0.5175202" order="8" side_tool="true" content_ui="tabs" />
@@ -1634,7 +1631,8 @@
     <MESSAGE value="initial" />
     <MESSAGE value="auth,userprofile" />
     <MESSAGE value="neo4j queries + bugfixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="neo4j queries + bugfixes" />
+    <MESSAGE value="priceForRoute added" />
+    <option name="LAST_COMMIT_MESSAGE" value="priceForRoute added" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1647,13 +1645,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/resources/profiles.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fellowtraveler/controller/map/MapController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="32">
@@ -2128,6 +2119,17 @@
         <state relative-caret-position="150">
           <caret line="10" column="45" lean-forward="true" selection-start-line="10" selection-start-column="45" selection-end-line="10" selection-end-column="45" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="258">
+            <caret line="269" column="1" lean-forward="true" selection-start-line="269" selection-start-column="1" selection-end-line="269" selection-end-column="1" />
+            <folding />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
