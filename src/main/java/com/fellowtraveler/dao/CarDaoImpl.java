@@ -48,8 +48,4 @@ public class CarDaoImpl extends AbstractDao<Integer, Car>  implements CarDao{
         return  q.getResultList();
     }
 
-
-
-
-
 }

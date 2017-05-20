@@ -52,7 +52,7 @@ public class AppConfig extends WebMvcConfigurerAdapter implements AsyncConfigure
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
 
-        System.out.println("viewResolvers");
+
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setViewClass(JstlView.class);
         viewResolver.setPrefix("/WEB-INF/views/");

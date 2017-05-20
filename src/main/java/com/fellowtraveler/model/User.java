@@ -5,6 +5,8 @@ package com.fellowtraveler.model;
  */
 
 import com.fasterxml.jackson.annotation.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -63,7 +65,15 @@ public class User implements Serializable{
     @JsonManagedReference
     private List<Car> cars = new ArrayList<Car>();
 
+    @OneToMany(mappedBy = "sender",  fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    //@JsonManagedReference
+    private List<Review> outgoingReviews = new ArrayList<Review>();
 
+    @OneToMany(mappedBy = "recipient",  fetch = FetchType.EAGER)
+    //@JsonManagedReference
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<Review> incomingReviews = new ArrayList<Review>();
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)

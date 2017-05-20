@@ -1,5 +1,6 @@
 package com.fellowtraveler.model;
 
+import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 
@@ -16,6 +17,10 @@ public class User_ {
     public static volatile SingularAttribute<User, String> gender;
     public static volatile SingularAttribute<User, String> imageUrl;
     public static volatile SetAttribute<User, UserProfile> userProfiles;
+
     public static volatile SetAttribute<User, Car> cars;
+
+    public static volatile ListAttribute<User, Review> outgoingReviews;
+    public static volatile ListAttribute<User, Review> incomingReviews;
 
 }
