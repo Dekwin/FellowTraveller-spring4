@@ -1,5 +1,6 @@
 package com.fellowtraveler.dao;
 
+import com.fellowtraveler.model.Car;
 import com.fellowtraveler.model.Review;
 
 import java.util.List;
@@ -12,5 +13,8 @@ public interface ReviewDao {
     List<Review> findAllReviewsForUser(int userId);
     List<Review> findAllReviewsForDriver(int userId);
     List<Review> findAllReviewsForPassenger(int userId);
+
+    void save(Review review);
+    void deleteById(int id);
 
 }

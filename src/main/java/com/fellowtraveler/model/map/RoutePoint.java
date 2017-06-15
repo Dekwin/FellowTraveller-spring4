@@ -1,16 +1,6 @@
 package com.fellowtraveler.model.map;
 
 
-import java.util.HashSet;
-import java.util.Set;
-
-import com.fellowtraveler.model.map.CollectionData;
-import org.neo4j.ogm.annotation.GraphId;
-import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Relationship;
-import org.springframework.data.geo.Point;
-
-import org.neo4j.helpers.collection.Iterables;
 import org.springframework.data.neo4j.annotation.QueryResult;
 
 @QueryResult
