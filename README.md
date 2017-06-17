@@ -457,10 +457,6 @@ Authorization: `<token>`
 Authorization: `<token>`
 
 ### Параметры
-@RequestParam("recipient") Optional<Integer> recipient,
-                                           @RequestParam("forDriver") Optional<Boolean> forDriver,
-                                           @RequestParam("offset") Optional<Integer> offset,
-                                           @RequestParam("limit") Optional<Integer> limit
 - *optional* **string** `recipient`. id получателя (свой в т.ч.), если параметр не передан, то выдаются отправленные отзывы текущего пользователя
 - *optional* **bool** `forDriver`. отзыв для типа водитель если true, если false - для пассажира (работает только в связке с пареметром `recipient`)
 - *optional* **int** `offset`. смещение

@@ -7,16 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ecf03573-ba17-4d2b-98f7-78d7f70123bb" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/fellowtraveler/controller/review/ReviewController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/fellowtraveler/service/ReviewService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/fellowtraveler/service/ReviewServiceImpl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fellowtraveler/dao/ReviewDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/fellowtraveler/dao/ReviewDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fellowtraveler/dao/ReviewDaoImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/fellowtraveler/dao/ReviewDaoImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fellowtraveler/model/Review.java" afterPath="$PROJECT_DIR$/src/main/java/com/fellowtraveler/model/Review.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fellowtraveler/model/Review_.java" afterPath="$PROJECT_DIR$/src/main/java/com/fellowtraveler/model/Review_.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fellowtraveler/model/User.java" afterPath="$PROJECT_DIR$/src/main/java/com/fellowtraveler/model/User.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/application.properties" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -105,11 +98,21 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="393">
-                <caret line="480" column="22" lean-forward="false" selection-start-line="480" selection-start-column="22" selection-end-line="480" selection-end-column="22" />
+              <first_editor relative-caret-position="273">
+                <caret line="383" column="0" lean-forward="true" selection-start-line="383" selection-start-column="0" selection-end-line="383" selection-end-column="0" />
                 <folding />
               </first_editor>
               <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="application.properties" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" column="1" lean-forward="true" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -123,18 +126,6 @@
                 <element signature="imports" expanded="true" />
                 <element signature="e#758#759#0" expanded="true" />
                 <element signature="e#790#791#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AbstractDao.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/fellowtraveler/dao/AbstractDao.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="112">
-              <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
-              <folding>
-                <element signature="e#1391#1392#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -267,7 +258,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/fellowtraveler/service/map/PointServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fellowtraveler/configuration/AppConfig.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fellowtraveler/model/User_.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/src/main/java/com/fellowtraveler/dao/AbstractDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fellowtraveler/dao/CarDaoImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fellowtraveler/dao/UserDao.java" />
@@ -281,6 +271,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/fellowtraveler/model/Review_.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fellowtraveler/dao/ReviewDaoImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fellowtraveler/controller/review/ReviewController.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
@@ -1551,7 +1542,7 @@
       <workItem from="1496588804621" duration="2269000" />
       <workItem from="1497554360694" duration="214000" />
       <workItem from="1497629833886" duration="7409000" />
-      <workItem from="1497689375409" duration="5463000" />
+      <workItem from="1497689375409" duration="5660000" />
     </task>
     <task id="LOCAL-00001" summary="initial">
       <created>1488840070813</created>
@@ -1602,7 +1593,14 @@
       <option name="project" value="LOCAL" />
       <updated>1497554408220</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="reviews api implementation + docs">
+      <created>1497695731087</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1497695731087</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1638,7 +1636,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="344512000" />
+    <option name="totallyTimeSpent" value="344709000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1665,7 +1663,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.48997134" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.48997134" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295129" sideWeight="0.49697885" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38108882" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1704,7 +1702,8 @@
     <MESSAGE value="priceForRoute added" />
     <MESSAGE value="priceForRoute readme changes" />
     <MESSAGE value="add review" />
-    <option name="LAST_COMMIT_MESSAGE" value="add review" />
+    <MESSAGE value="reviews api implementation + docs" />
+    <option name="LAST_COMMIT_MESSAGE" value="reviews api implementation + docs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1865,14 +1864,6 @@
           <folding>
             <element signature="imports" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="10" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="17" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2177,11 +2168,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="1" lean-forward="true" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="393">
-            <caret line="480" column="22" lean-forward="false" selection-start-line="480" selection-start-column="22" selection-end-line="480" selection-end-column="22" />
+          <first_editor relative-caret-position="273">
+            <caret line="383" column="0" lean-forward="true" selection-start-line="383" selection-start-column="0" selection-end-line="383" selection-end-column="0" />
             <folding />
           </first_editor>
           <second_editor />
