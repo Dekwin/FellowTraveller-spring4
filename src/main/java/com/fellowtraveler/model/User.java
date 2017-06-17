@@ -65,12 +65,14 @@ public class User implements Serializable{
     @JsonManagedReference
     private List<Car> cars = new ArrayList<Car>();
 
-    @OneToMany(mappedBy = "sender",  fetch = FetchType.EAGER)
+    @JsonIgnore
+    @OneToMany(mappedBy = "sender",  fetch = FetchType.LAZY)
     @Fetch(value = FetchMode.SUBSELECT)
     //@JsonManagedReference
     private List<Review> outgoingReviews = new ArrayList<Review>();
 
-    @OneToMany(mappedBy = "recipient",  fetch = FetchType.EAGER)
+    @JsonIgnore
+    @OneToMany(mappedBy = "recipient",  fetch = FetchType.LAZY)
     //@JsonManagedReference
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Review> incomingReviews = new ArrayList<Review>();
@@ -162,6 +164,22 @@ public class User implements Serializable{
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public List<Review> getOutgoingReviews() {
+        return outgoingReviews;
+    }
+
+    public void setOutgoingReviews(List<Review> outgoingReviews) {
+        this.outgoingReviews = outgoingReviews;
+    }
+
+    public List<Review> getIncomingReviews() {
+        return incomingReviews;
+    }
+
+    public void setIncomingReviews(List<Review> incomingReviews) {
+        this.incomingReviews = incomingReviews;
     }
 
     @Override

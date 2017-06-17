@@ -14,7 +14,7 @@ public class Review_ {
     public static volatile SingularAttribute<Review, Integer> id;
     public static volatile SingularAttribute<Review, String> title;
     public static volatile SingularAttribute<Review, Long> datetime;
-    public static volatile SingularAttribute<Review, Boolean> isForDriver;
+    public static volatile SingularAttribute<Review, Boolean> forDriver;
     public static volatile SingularAttribute<Review, String> text;
     public static volatile SingularAttribute<Review, Integer> rating;
     public static volatile SingularAttribute<Review, User> sender;

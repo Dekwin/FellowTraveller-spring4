@@ -10,10 +10,9 @@ import java.util.List;
  */
 public interface ReviewDao {
 
-    List<Review> findAllReviewsForUser(int userId);
-    List<Review> findAllReviewsForDriver(int userId);
-    List<Review> findAllReviewsForPassenger(int userId);
-
+    Review findById(int id);
+    List<Review> findAllForSender(int userId, int offset, int limit);
+    List<Review> findAllForRecipient(int userId, boolean isForDriver, int offset, int limit);
     void save(Review review);
     void deleteById(int id);
 

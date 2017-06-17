@@ -1,11 +1,14 @@
 package com.fellowtraveler.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Date;
 
@@ -23,13 +26,13 @@ public class Review implements Serializable {
     @Column(name = "TITLE", nullable = false)
     private String title;
 
-    @NotEmpty
+    @NotNull
     @Column(name = "DATETIME", nullable = false)
     private Long datetime;
 
     //@NotEmpty
-    @Column(name = "IS_FOR_DRIVER", nullable = false)
-    private Boolean isForDriver;
+    @Column(name = "FOR_DRIVER", nullable = false)
+    private Boolean forDriver;
 
     //@NotEmpty
     @Column(name = "TEXT", nullable = false)
@@ -39,14 +42,17 @@ public class Review implements Serializable {
     @Column(name = "RATING", nullable = false)
     private Integer rating;
 
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "SENDER_ID")
     //@JsonBackReference
+    @JsonIgnoreProperties({"password", "email","ssoId","outgoingReviews","incomingReviews","userProfiles","cars","gender" })
     private User sender;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "RECIPIENT_ID")
     //@JsonBackReference
+    @JsonIgnoreProperties({"password", "email","ssoId","outgoingReviews","incomingReviews","userProfiles","cars","gender" })
     private User recipient;
 
     public Integer getId() {
@@ -74,11 +80,11 @@ public class Review implements Serializable {
     }
 
     public Boolean getForDriver() {
-        return isForDriver;
+        return forDriver;
     }
 
     public void setForDriver(Boolean forDriver) {
-        isForDriver = forDriver;
+        this.forDriver = forDriver;
     }
 
     public String getText() {

@@ -389,3 +389,98 @@ Authorization: `<token>`
 
 ### Заголовок 
 Authorization: `<token>`
+
+
+
+# Reviews
+
+
+## POST reviews
+
+Добавление отзыва.
+### Заголовок 
+Authorization: `<token>`
+
+### Параметры
+- *required* **string** `title`. заголовок отзыва
+- *required* **long** `datetime`. время в миллисекундах 
+- *required* **bool** `forDriver`. отзыв для типа водитель если true, если false - для пассажира 
+- *required* **long** `text`. тело отзыва 
+- *required* **int** `rating`. оценка к отзыву от 0 до 5
+- *required* **object(User)** `recipient`. в объекте передается только id пользователя-получателя
+
+Запрос:
+```
+{
+  "id": null,
+  "title": "Круто доехали",
+  "datetime": 87,
+  "forDriver": "false",
+  "text": "Водитель явно снимался в фильме 'такси'",
+  "rating": 4,
+  "sender": null,
+  "recipient": {
+    "id":3
+  }
+}
+```
+Ответ:
+```
+{
+    "id": 14,
+    "title": "Круто доехали",
+    "datetime": 87,
+    "forDriver": false,
+    "text": "Водитель явно снимался в фильме 'такси'",
+    "rating": 4,
+    "sender": {
+        "id": 4,
+        "firstName": "lol",
+        "lastName": "hsjhjslast",
+        "imageUrl": null
+    },
+    "recipient": {
+        "id": 3,
+        "firstName": "lol",
+        "lastName": "hsjhjslast",
+        "imageUrl": null
+    }
+}
+```
+
+
+
+## GET reviews
+Получение отзывов.
+(сортируются по дате добавления)
+### Заголовок 
+Authorization: `<token>`
+
+### Параметры
+@RequestParam("recipient") Optional<Integer> recipient,
+                                           @RequestParam("forDriver") Optional<Boolean> forDriver,
+                                           @RequestParam("offset") Optional<Integer> offset,
+                                           @RequestParam("limit") Optional<Integer> limit
+- *optional* **string** `recipient`. id получателя (свой в т.ч.), если параметр не передан, то выдаются отправленные отзывы текущего пользователя
+- *optional* **bool** `forDriver`. отзыв для типа водитель если true, если false - для пассажира (работает только в связке с пареметром `recipient`)
+- *optional* **int** `offset`. смещение
+- *optional* **int** `limit`. лимит
+
+Пример запроса:
+```
+/reviews?recipient=3&forDriver=false
+```
+
+Ответ:
+
+массив объектов Review(т.е. массив объектов как в ответе метода выше)
+
+
+
+## DELETE reviews/{id}
+Удаление отзыва по его id.
+
+### Заголовок 
+Authorization: `<token>`
+
+
